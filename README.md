@@ -1,1 +1,1 @@
-# udacity.project.myread
+In the MyReads project, I created a bookshelf app that allows you to select and categorize books I have read, am currently reading, or want to read. The project emphasizes using React to build the application and provides an API server and client library that I will use to persist information as I interact with the application.
