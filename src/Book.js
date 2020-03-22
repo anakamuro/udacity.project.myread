@@ -8,7 +8,7 @@ const Book = props => {
     authors = [],
     imageLinks = { thumbnail: "" },
     title = "",
-    shelf = "none"
+    shelf = ""
   } = book;
   // authors = book.authors
 
