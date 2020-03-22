@@ -41,7 +41,11 @@ class BooksApp extends React.Component {
                     {this.state.books
                       .filter(currentlyReadingFilter)
                       .map(book => (
-                        <Book book={book} onMove={this.updateBooks} />
+                        <Book 
+                        key={book.id} 
+                        book={book} 
+                        onMove={this.updateBooks} 
+                        />
                       ))}
                   </ol>
                 </div>
@@ -51,7 +55,11 @@ class BooksApp extends React.Component {
                 <div className="bookshelf-books">
                   <ol className="books-grid">
                     {this.state.books.filter(wantToReadFilter).map(book => (
-                      <Book book={book} onMove={this.updateBooks} />
+                      <Book 
+                      key={book.id}
+                      book={book}
+                      onMove={this.updateBooks}
+                       />
                     ))}
                   </ol>
                 </div>
@@ -61,7 +69,11 @@ class BooksApp extends React.Component {
                 <div className="bookshelf-books">
                   <ol className="books-grid">
                     {this.state.books.filter(readFilter).map(book => (
-                      <Book book={book} onMove={this.updateBooks} />
+                      <Book 
+                      key={book.id} 
+                      book={book} 
+                      onMove={this.updateBooks} 
+                      />
                     ))}
                   </ol>
                 </div>
