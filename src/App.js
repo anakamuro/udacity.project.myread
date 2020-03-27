@@ -3,30 +3,28 @@ import React from "react";
 import BooksApp from "./BooksApp";
 import Search from "./Search";
 import "./App.css";
-import * as BooksAPI from "./BooksAPI";
+import { getAll } from "./BooksAPI";
 
 class App extends React.Component {
-  state = {
-    book: [],
-    error: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: [],
+      error: false
+    };
+    this.updateBooks = this.updateBooks.bind(this);
+  }
+  
 
-  moveShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).catch(err => {
-      console.log(err);
-      this.setState({ error: true });
+  componentDidMount() {
+    this.updateBooks();
+  }
+
+  updateBooks() {
+    getAll().then(response => {
+      this.setState({ books: response });
     });
-    if (shelf === "none") {
-      this.setState(prevState => ({
-        books: prevState.books.filter(b => b.id !== book.id)
-      }));
-    } else {
-      book.shelf = shelf;
-      this.setState(prevState => ({
-        books: prevState.books.filter(b => b.id !== book.id).concat(book)
-      }));
-    }
-  };
+  }
 
   render() {
     return (
@@ -36,13 +34,19 @@ class App extends React.Component {
             exact
             path="/"
             render={() => (
-              <BooksApp book={this.state.book} onMove={this.moveShelf} />
+              <BooksApp
+                books={this.state.books}
+                onMove={this.updateBooks}
+              />
             )}
           />
           <Route
             path="/search"
             render={() => (
-              <Search book={this.state.book} onMove={this.moveShelf} />
+              <Search
+                myBooks={this.state.books}
+                onMove={this.updateBooks}
+              />
             )}
           />
         </Switch>
