@@ -31,13 +31,21 @@ class Search extends React.Component {
     }
   };
 
-  onMove = () => {
-    this.updateResults();
-  };
-
   render() {
     const { results, error } = this.state;
-    console.log(results);
+    const { myBooks, onMove } = this.props;
+
+    // Grab the shelf status from myBooks
+    const updatedResults = results.map(book => {
+      // If book is in my library update the shelf
+      const myBook = myBooks.find(b => b.id === book.id) // returns undefined if not found
+      if(myBook !== undefined) {
+        book.shelf = myBook.shelf; // add shelf to each book
+      }
+
+      return book;
+    })
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -54,9 +62,8 @@ class Search extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {error
-              ? error
-              : results.map(book => <Book key={book.id} book={book} />)}
+            {/* Show results with updated shelf  */}
+            {error ? error : updatedResults.map(book => <Book book={book} onMove={onMove}/>)}
           </ol>
         </div>
       </div>
