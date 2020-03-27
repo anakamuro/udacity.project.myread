@@ -8,14 +8,14 @@ const Book = props => {
     authors = [],
     imageLinks = { thumbnail: "" },
     title = "",
-    shelf = ""
+    shelf = "none"
   } = book;
   // authors = book.authors
 
   const handleShelfChange = e => {
     const shelf = e.target.value;
     update(book, shelf).then(response => {
-      if (onMove) onMove();
+      onMove();
     });
   };
 
