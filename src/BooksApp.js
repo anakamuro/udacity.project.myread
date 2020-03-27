@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import { getAll } from "./BooksAPI";
 import Book from "./Book";
 import { Link } from "react-router-dom";
 
@@ -9,23 +8,9 @@ const readFilter = book => book.shelf === "read";
 const wantToReadFilter = book => book.shelf === "wantToRead";
 
 class BooksApp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { books: [] };
-    this.updateBooks = this.updateBooks.bind(this);
-  }
-
-  componentDidMount() {
-    this.updateBooks();
-  }
-
-  updateBooks() {
-    getAll().then(response => {
-      this.setState({ books: response });
-    });
-  }
 
   render() {
+    const { books, onMove } = this.props;
     return (
       <div className="app">
         <div className="list-books">
@@ -38,14 +23,9 @@ class BooksApp extends React.Component {
                 <h2 className="bookshelf-title">Currently Reading</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    {this.state.books
-                      .filter(currentlyReadingFilter)
+                    {books.filter(currentlyReadingFilter)
                       .map(book => (
-                        <Book 
-                        key={book.id} 
-                        book={book} 
-                        onMove={this.updateBooks} 
-                        />
+                        <Book key={book.id} book={book} onMove={onMove} />
                       ))}
                   </ol>
                 </div>
@@ -54,12 +34,8 @@ class BooksApp extends React.Component {
                 <h2 className="bookshelf-title">Want to Read</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    {this.state.books.filter(wantToReadFilter).map(book => (
-                      <Book 
-                      key={book.id}
-                      book={book}
-                      onMove={this.updateBooks}
-                       />
+                    {books.filter(wantToReadFilter).map(book => (
+                      <Book key={book.id} book={book} onMove={onMove} />
                     ))}
                   </ol>
                 </div>
@@ -68,12 +44,8 @@ class BooksApp extends React.Component {
                 <h2 className="bookshelf-title">Read</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    {this.state.books.filter(readFilter).map(book => (
-                      <Book 
-                      key={book.id} 
-                      book={book} 
-                      onMove={this.updateBooks} 
-                      />
+                    {books.filter(readFilter).map(book => (
+                      <Book key={book.id} book={book} onMove={onMove} />
                     ))}
                   </ol>
                 </div>
